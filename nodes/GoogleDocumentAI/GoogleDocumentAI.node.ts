@@ -116,28 +116,38 @@ export class GoogleDocumentAI implements INodeType {
 					[result] = await client.textDetection(filePath);
 				}
 
-				// Extract and validate text annotations
-				const { textAnnotations } = result;
-				if (!textAnnotations || typeof textAnnotations[0]?.description !== 'string') {
-					throw new NodeOperationError(this.getNode(), 'Document or document text is invalid');
-				}
-
-				// Format and return the extracted text annotations
+			// Extract and validate text annotations
+			const { textAnnotations } = result;
+			
+			// Handle cases where no text is found in the document
+			if (!textAnnotations || textAnnotations.length === 0) {
 				returnData.push({
 					json: {
-						textAnnotations: textAnnotations.map((annotation: any) => ({
-							mid: annotation?.mid,
-							locale: annotation?.locale,
-							description: annotation?.description,
-							score: annotation?.score,
-							confidence: annotation?.confidence,
-							topicality: annotation?.topicality,
-							boundingPoly: annotation?.boundingPoly,
-							locations: annotation?.locations,
-							properties: annotation?.properties,
-						}))
+						textAnnotations: [],
+						message: 'No text found in document'
 					},
+					pairedItem: itemIndex,
 				});
+				continue;
+			}
+
+			// Format and return the extracted text annotations
+			returnData.push({
+				json: {
+					textAnnotations: textAnnotations.map((annotation: any) => ({
+						mid: annotation?.mid,
+						locale: annotation?.locale,
+						description: annotation?.description,
+						score: annotation?.score,
+						confidence: annotation?.confidence,
+						topicality: annotation?.topicality,
+						boundingPoly: annotation?.boundingPoly,
+						locations: annotation?.locations,
+						properties: annotation?.properties,
+					}))
+				},
+				pairedItem: itemIndex,
+			});
 
 			} catch (error) {
 				// Handle errors based on continueOnFail setting
