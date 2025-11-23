@@ -42,7 +42,7 @@
       "dist/credentials/GoogleServiceAccount.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/GoogleDocumentAI/GoogleDocumentAI.node.js"
+      "dist/nodes/GoogleDocumentAI/GoogleDocumentAi.node.js"
     ]
   },
   "devDependencies": {
