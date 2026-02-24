@@ -31,7 +31,7 @@ export class GoogleDocumentAI implements INodeType {
 		outputs: ['main'],
 		credentials: [
 			{
-				name: 'googleServiceAccount',
+				name: 'googleServiceAccountApi',
 				required: true,
 			},
 		],
@@ -91,7 +91,7 @@ export class GoogleDocumentAI implements INodeType {
 		const returnData: INodeExecutionData[] = [];
 
 		// Initialize Google Vision client with service account credentials
-		const credentials = await this.getCredentials('googleServiceAccount');
+		const credentials = await this.getCredentials('googleServiceAccountApi');
 		const serviceAccountKey = JSON.parse(credentials.serviceAccountKey as string);
 		const client = new vision.ImageAnnotatorClient({
 			credentials: serviceAccountKey
