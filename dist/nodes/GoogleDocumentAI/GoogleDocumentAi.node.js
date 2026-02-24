@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GoogleDocumentAI = void 0;
+exports.GoogleDocumentAi = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
 const vision_1 = __importDefault(require("@google-cloud/vision"));
-class GoogleDocumentAI {
+class GoogleDocumentAi {
     constructor() {
         this.description = {
             displayName: 'Google Document AI OCR',
@@ -14,6 +14,7 @@ class GoogleDocumentAI {
             icon: 'file:icons/google-vision-ai.svg',
             group: ['transform'],
             version: 1,
+            subtitle: '={{$parameter["inputType"]}}',
             description: 'Extract text from documents using Google Document AI OCR',
             defaults: {
                 name: 'Google Document AI OCR',
@@ -65,11 +66,11 @@ class GoogleDocumentAI {
                     required: true,
                     displayOptions: {
                         show: {
-                            inputType: ['filePath']
-                        }
+                            inputType: ['filePath'],
+                        },
                     },
                     description: 'Path to the document file',
-                }
+                },
             ],
         };
     }
@@ -79,7 +80,7 @@ class GoogleDocumentAI {
         const credentials = await this.getCredentials('googleServiceAccountApi');
         const serviceAccountKey = JSON.parse(credentials.serviceAccountKey);
         const client = new vision_1.default.ImageAnnotatorClient({
-            credentials: serviceAccountKey
+            credentials: serviceAccountKey,
         });
         let result;
         for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
@@ -99,7 +100,7 @@ class GoogleDocumentAI {
                     returnData.push({
                         json: {
                             textAnnotations: [],
-                            message: 'No text found in document'
+                            message: 'No text found in document',
                         },
                         pairedItem: itemIndex,
                     });
@@ -117,7 +118,7 @@ class GoogleDocumentAI {
                             boundingPoly: annotation === null || annotation === void 0 ? void 0 : annotation.boundingPoly,
                             locations: annotation === null || annotation === void 0 ? void 0 : annotation.locations,
                             properties: annotation === null || annotation === void 0 ? void 0 : annotation.properties,
-                        }))
+                        })),
                     },
                     pairedItem: itemIndex,
                 });
@@ -125,16 +126,13 @@ class GoogleDocumentAI {
             catch (error) {
                 if (this.continueOnFail()) {
                     returnData.push({
-                        json: {
-                            error: error.message,
-                        },
+                        json: { error: error.message },
                         pairedItem: itemIndex,
                     });
                 }
                 else {
                     throw new n8n_workflow_1.NodeOperationError(this.getNode(), error, {
                         itemIndex,
-                        description: `Error: ${error.message}`,
                     });
                 }
             }
@@ -142,5 +140,5 @@ class GoogleDocumentAI {
         return [returnData];
     }
 }
-exports.GoogleDocumentAI = GoogleDocumentAI;
+exports.GoogleDocumentAi = GoogleDocumentAi;
 //# sourceMappingURL=GoogleDocumentAi.node.js.map

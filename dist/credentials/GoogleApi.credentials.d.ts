@@ -1,8 +1,0 @@
-import { Icon, ICredentialType, INodeProperties } from 'n8n-workflow';
-export declare class GoogleApi implements ICredentialType {
-    name: string;
-    displayName: string;
-    documentationUrl: string;
-    icon: Icon;
-    properties: INodeProperties[];
-}
