@@ -8,7 +8,7 @@ import {
 export class HttpBinApi implements ICredentialType {
 	name = 'httpbinApi';
 	displayName = 'HttpBin API';
-	documentationUrl = 'https://github.com/ephraimm/n8n-nodes-google-document-ai';
+	documentationUrl = 'https://github.com/jr-k/n8n-nodes-google-document-ai-reloaded';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Token',

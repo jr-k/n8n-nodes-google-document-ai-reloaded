@@ -1,6 +1,6 @@
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
-# n8n-nodes-google-document-ai
+# n8n-nodes-google-document-ai-reloaded
 
 This is an n8n community node. It lets you use Google Document AI in your n8n workflows.
 
@@ -73,7 +73,7 @@ cd .n8n
 mkdir custom    
 cd custom 
 npm init
-npm link @n8n-nodes-google-document-ai
+npm link @n8n-nodes-google-document-ai-reloaded
 npm start
 ```
 
